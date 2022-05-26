@@ -41,9 +41,9 @@ export class App extends Component {
     let contactsNameArray = [];
     let contactsNumberArray = [];
 
-    contactsNameArray = this.state.contacts.map(contact => contact.name);
+    contactsNameArray = this.state.contacts?.map(contact => contact.name);
 
-    contactsNumberArray = this.state.contacts.map(contact => contact.number);
+    contactsNumberArray = this.state.contacts?.map(contact => contact.number);
 
     return (
       contactsNameArray.includes(name) || contactsNumberArray.includes(number)
