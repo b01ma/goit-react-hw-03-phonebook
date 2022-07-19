@@ -1,38 +1,25 @@
-import styled from 'styled-components';
+import { Button, Ul, Li } from './ContactList.css';
+import PropTypes from 'prop-types';
 
-const Button = styled.button`
-  color: black;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid orange;
-  border-radius: 3px;
-`;
-
-const Ul = styled.ul`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Li = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const ContactList = ({ contacts, filter, onDelete }) => {
+export const ContactList = ({ contacts, onDelete }) => {
   return (
     <Ul>
-      {contacts.map(
-        contact =>
-          contact.name.toLowerCase().includes(filter.toLowerCase()) && (
-            <Li key={contact.id}>
-              {contact.name}: {contact.number}
-              <Button onClick={() => onDelete(contact.id)}>Delete</Button>
-            </Li>
-          )
-      )}
+      {contacts.map(contact => (
+        <Li key={contact.id}>
+          {contact.name}: {contact.number}
+          <Button onClick={() => onDelete(contact.id)}>Delete</Button>
+        </Li>
+      ))}
     </Ul>
   );
+};
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };

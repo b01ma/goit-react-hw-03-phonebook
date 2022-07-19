@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
+import wrapper from './App.css';
 
 export class App extends Component {
   state = {
@@ -16,7 +17,7 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    console.log('didMount worked');
+    // console.log('didMount worked');
 
     const savedContacts = JSON.parse(localStorage.getItem('contacts'));
 
@@ -26,7 +27,7 @@ export class App extends Component {
   }
 
   componentDidUpdate() {
-    console.log('didUpdate worked');
+    // console.log('didUpdate worked');
 
     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   }
@@ -38,15 +39,14 @@ export class App extends Component {
   };
 
   isSameContact = (name, number) => {
-    let contactsNameArray = [];
-    let contactsNumberArray = [];
-
-    contactsNameArray = this.state.contacts?.map(contact => contact.name);
-
-    contactsNumberArray = this.state.contacts?.map(contact => contact.number);
-
     return (
-      contactsNameArray.includes(name) || contactsNumberArray.includes(number)
+      this.state.contacts.find(
+        contact =>
+          contact.name.toLowerCase().trim() === name.toLowerCase().trim()
+      ) ||
+      this.state.contacts.find(
+        contact => contact.number.trim() === number.trim()
+      )
     );
   };
 
@@ -68,16 +68,6 @@ export class App extends Component {
   };
 
   render() {
-    const wrapper = {
-      padding: 10,
-      background: 'papayawhip',
-      height: '100vh',
-
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    };
-
     return (
       <div style={wrapper}>
         <h1>Phonebook</h1>

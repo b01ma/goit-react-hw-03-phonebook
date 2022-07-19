@@ -1,34 +1,6 @@
 import { Component } from 'react/cjs/react.production.min';
-import styled from 'styled-components';
-
-const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  padding: 10px 10px 10px 0px;
-`;
-
-const Label = styled.label`
-  display: flex;
-  width: 250px;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px 10px 10px 0px;
-`;
-
-const Button = styled.button`
-  width: 150px;
-  color: black;
-  font-size: 1em;
-  margin-top: 15px;
-  padding: 0.25em 1em;
-  border: 2px solid orange;
-  border-radius: 3px;
-
-  margin-left: auto;
-  margin-right: auto;
-`;
+import { Wrapper, Label, Button } from './ContactForm.css';
+import PropTypes from 'prop-types';
 
 class ContactForm extends Component {
   state = {
@@ -49,6 +21,9 @@ class ContactForm extends Component {
   };
 
   render() {
+    ContactForm.propTypes = {
+      onSubmit: PropTypes.func.isRequired,
+    };
     return (
       <form onSubmit={this.handleSubmit}>
         <Wrapper>
