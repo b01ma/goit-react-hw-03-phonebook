@@ -21,7 +21,10 @@ export class App extends Component {
 
     const savedContacts = JSON.parse(localStorage.getItem('contacts'));
 
-    if (this.state.contacts) {
+    console.log(savedContacts);
+    console.log(this.state.contacts);
+
+    if (savedContacts) {
       this.setState({ contacts: savedContacts });
     }
   }
@@ -77,11 +80,13 @@ export class App extends Component {
 
         <Filter onChange={this.filterChange} value={this.state.filter} />
 
-        <ContactList
-          contacts={this.state.contacts}
-          filter={this.state.filter}
-          onDelete={this.deleteContact}
-        />
+        {this.state.contacts && (
+          <ContactList
+            contacts={this.state.contacts}
+            filter={this.state.filter}
+            onDelete={this.deleteContact}
+          />
+        )}
       </div>
     );
   }
