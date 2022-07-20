@@ -8,21 +8,12 @@ import wrapper from './App.css';
 export class App extends Component {
   state = {
     contacts: [],
-
-    // [{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    // { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    // { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    // { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },],
     filter: '',
+    fileteredContacts: [],
   };
 
   componentDidMount() {
-    // console.log('didMount worked');
-
     const savedContacts = JSON.parse(localStorage.getItem('contacts'));
-
-    // console.log(savedContacts);
-    // console.log(this.state.contacts);
 
     if (savedContacts) {
       this.setState({ contacts: savedContacts });
@@ -30,8 +21,6 @@ export class App extends Component {
   }
 
   componentDidUpdate() {
-    // console.log('didUpdate worked');
-
     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   }
 
@@ -66,8 +55,17 @@ export class App extends Component {
       : this.setState({ contacts: updatedContacts });
   };
 
-  filterChange = e => {
-    this.setState({ filter: e.currentTarget.value });
+  handleFilterChange = value => {
+    console.log(value);
+    this.setState({ filter: value });
+  };
+
+  handleFilter = filter => {
+    const filteredContacts = this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    return filteredContacts;
   };
 
   render() {
@@ -78,12 +76,11 @@ export class App extends Component {
 
         <h1>Contacts</h1>
 
-        <Filter onChange={this.filterChange} value={this.state.filter} />
+        <Filter onChange={this.handleFilterChange} value={this.state.filter} />
 
         {this.state.contacts && (
           <ContactList
-            contacts={this.state.contacts}
-            filter={this.state.filter}
+            contacts={this.handleFilter(this.state.filter)}
             onDelete={this.deleteContact}
           />
         )}
